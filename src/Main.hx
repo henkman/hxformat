@@ -25,11 +25,11 @@ class Main
 			Sys.println("usage: hxformat [file|dir] (-r Recursive) (-b Backup)");
 			return;
 		}
-		var target = args [0];
+		var target = args[0];
 		var recursive = false;
 		var backup = false;
 		for (i in 1...args.length) {
-			var option = args [i];
+			var option = args[i];
 			if (option == "-r") {
 				recursive = true;
 			} else if (option == "-b") {
