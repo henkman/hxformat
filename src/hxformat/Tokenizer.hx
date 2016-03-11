@@ -1,7 +1,8 @@
 package hxformat;
 import hxformat.Tokenizer.Token;
 
-enum TokenType {
+enum TokenType
+{
 	EOF;
 	UNEXPECTED;
 	NEWLINE;
@@ -113,7 +114,8 @@ enum TokenType {
 	WHILE;
 }
 
-class Token {
+class Token
+{
 	public var type:TokenType;
 	public var value:String;
 	public function new(type:TokenType, ?value:String = null)
@@ -358,7 +360,7 @@ class Tokenizer
 	private inline function skipWhitespacePeek():Int
 	{
 		var c = peek();
-		while (isWhitespace(c)) {
+		while (isWhitespace(c)) 		{
 			next();
 			c = peek();
 		}
@@ -372,10 +374,10 @@ class Tokenizer
 		var startsWithDot = c == ".".code;
 		next();
 		c = peek();
-		if (startsWithDot && !isNumber(c)) {
+		if (startsWithDot && !isNumber(c)) 		{
 			return new Token(TokenType.DOT);
 		}
-		while (isNumber(c) || c == ".".code || isAlpha(c)) {
+		while (isNumber(c) || c == ".".code || isAlpha(c)) 		{
 			next();
 			c = peek();
 		}
@@ -401,7 +403,7 @@ class Tokenizer
 		mark();
 		next();
 		var c = peek();
-		switch (c) {
+		switch (c) 		{
 			case "/".code:
 			do {
 				next();
@@ -431,12 +433,12 @@ class Tokenizer
 		mark();
 		next();
 		var c = peek();
-		while (c == "_".code || isAlpha(c) || isNumber(c)) {
+		while (c == "_".code || isAlpha(c) || isNumber(c)) 		{
 			next();
 			c = peek();
 		}
 		var str = marked();
-		var type = switch (str) {
+		var type = switch (str) 		{
 			case "abstract":TokenType.ABSTRACT;
 			case "break":TokenType.BREAK;
 			case "case":TokenType.CASE;
@@ -493,7 +495,7 @@ class Tokenizer
 	private inline function equals():Token
 	{
 		next();
-		switch (peek()) {
+		switch (peek()) 		{
 			case "=".code:
 			next();
 			return new Token(TokenType.LOGIC_EQUALS);
@@ -508,7 +510,7 @@ class Tokenizer
 	private inline function exclamation():Token
 	{
 		next();
-		if (peek() == "=".code) {
+		if (peek() == "=".code) 		{
 			next();
 			return new Token(TokenType.LOGIC_NOT_EQUALS);
 		}
@@ -518,16 +520,16 @@ class Tokenizer
 	private inline function greatherthan():Token
 	{
 		next();
-		switch (peek()) {
+		switch (peek()) 		{
 			case "=".code:
 			next();
 			return new Token(TokenType.LOGIC_GREATER_THAN_EQUALS);
 			case ">".code:
 			next();
-			switch (peek()) {
+			switch (peek()) 			{
 				case ">".code:
 				next();
-				if (peek() == "=".code) {
+				if (peek() == "=".code) 				{
 					return new Token(TokenType.LOGIC_RIGHT_SHIFT_EQUALS);
 				}
 				return new Token(TokenType.LOGIC_RIGHT_SHIFT);
@@ -545,13 +547,13 @@ class Tokenizer
 	private inline function lessthan():Token
 	{
 		next();
-		switch (peek()) {
+		switch (peek()) 		{
 			case "=".code:
 			next();
 			return new Token(TokenType.LOGIC_LESS_THAN_EQUALS);
 			case "<".code:
 			next();
-			if (peek() == "=".code) {
+			if (peek() == "=".code) 			{
 				next();
 				return new Token(TokenType.SHIFT_LEFT_EQUALS);
 			}
@@ -564,7 +566,7 @@ class Tokenizer
 	private inline function plus():Token
 	{
 		next();
-		if (peek() == "=".code) {
+		if (peek() == "=".code) 		{
 			next();
 			return new Token(TokenType.PLUS_EQUALS);
 		}
@@ -574,7 +576,7 @@ class Tokenizer
 	private inline function minus():Token
 	{
 		next();
-		if (peek() == "=".code) {
+		if (peek() == "=".code) 		{
 			next();
 			return new Token(TokenType.MINUS_EQUALS);
 		}
@@ -584,7 +586,7 @@ class Tokenizer
 	private inline function star():Token
 	{
 		next();
-		if (peek() == "=".code) {
+		if (peek() == "=".code) 		{
 			next();
 			return new Token(TokenType.STAR_EQUALS);
 		}
@@ -594,7 +596,7 @@ class Tokenizer
 	private inline function percent():Token
 	{
 		next();
-		if (peek() == "=".code) {
+		if (peek() == "=".code) 		{
 			next();
 			return new Token(TokenType.PERCENT_EQUALS);
 		}
@@ -604,7 +606,7 @@ class Tokenizer
 	private inline function caret():Token
 	{
 		next();
-		if (peek() == "=".code) {
+		if (peek() == "=".code) 		{
 			next();
 			return new Token(TokenType.CARET_EQUALS);
 		}
@@ -614,7 +616,7 @@ class Tokenizer
 	private inline function pipe():Token
 	{
 		next();
-		switch (peek()) {
+		switch (peek()) 		{
 			case "=".code:
 			next();
 			return new Token(TokenType.PIPE_EQUALS);
@@ -629,7 +631,7 @@ class Tokenizer
 	private inline function and():Token
 	{
 		next();
-		switch (peek()) {
+		switch (peek()) 		{
 			case "=".code:
 			next();
 			return new Token(TokenType.AND_EQUALS);
@@ -644,7 +646,7 @@ class Tokenizer
 	public function token():Token
 	{
 		var c = skipWhitespacePeek();
-		switch (c) {
+		switch (c) 		{
 			case-1:return new Token(TokenType.EOF);
 			case "\n".code:next();return new Token(TokenType.NEWLINE);
 			case ";".code:next();return new Token(TokenType.SEMICOLON);
